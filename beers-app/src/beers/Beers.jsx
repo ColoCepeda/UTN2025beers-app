@@ -1,14 +1,26 @@
+import { useState } from 'react';
 import BeersList from './BeersList';
 import AvailableBeers from './AvailableBeers';
 import BeerStyleCount from './BeerStyleCount';
 import BeerStyles from './BeersStyles';
+import ChangeDollar from './ChangeDollar';
 import beers from './data';
 
-const usdToArs = 1000;
-
 const Beers = () => {
+	const [usdToArs, setUsdToArs] = useState(1350);
+    const [showDollar, setShowDollar] = useState(true);
+
+	const handleChangeUsdToArs = newValue => setUsdToArs(newValue);
+
 	return (
 		<div>
+			<button onClick={() => setShowDollar(!showDollar)}>
+                {showDollar ? 'Ocultar' : 'Mostrar'} cambio USD a ARS
+            </button>
+            {showDollar && (
+                <ChangeDollar usdToArs={usdToArs} onChangeDollar={handleChangeUsdToArs} />
+            )}
+
 			<h2>Todas las cervezas</h2>
 			<BeersList beers={beers} usdToArs={usdToArs} />
 
